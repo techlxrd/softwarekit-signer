@@ -1,0 +1,17 @@
+name: Cleanup Old Signatures
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs every midnight
+  workflow_dispatch: # Allows you to run it manually
+
+jobs:
+  delete-old-releases:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete releases older than 1 day
+        uses: dev-drprasad/delete-older-releases@v0.3.3
+        with:
+          keep_latest: 0
+          delete_expired_data: 1 # Deletes anything older than 1 day
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
